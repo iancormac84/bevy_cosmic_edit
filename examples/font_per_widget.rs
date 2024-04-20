@@ -67,30 +67,30 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
                 .style(FontStyle::Italic),
         ),
         ("\n", attrs),
-        ("R", attrs.color(bevy_color_to_cosmic(Color::RED))),
-        ("A", attrs.color(bevy_color_to_cosmic(Color::ORANGE))),
-        ("I", attrs.color(bevy_color_to_cosmic(Color::YELLOW))),
-        ("N", attrs.color(bevy_color_to_cosmic(Color::GREEN))),
-        ("B", attrs.color(bevy_color_to_cosmic(Color::BLUE))),
-        ("O", attrs.color(bevy_color_to_cosmic(Color::INDIGO))),
-        ("W ", attrs.color(bevy_color_to_cosmic(Color::PURPLE))),
-        ("Red ", attrs.color(bevy_color_to_cosmic(Color::RED))),
-        ("Orange ", attrs.color(bevy_color_to_cosmic(Color::ORANGE))),
-        ("Yellow ", attrs.color(bevy_color_to_cosmic(Color::YELLOW))),
-        ("Green ", attrs.color(bevy_color_to_cosmic(Color::GREEN))),
-        ("Blue ", attrs.color(bevy_color_to_cosmic(Color::BLUE))),
-        ("Indigo ", attrs.color(bevy_color_to_cosmic(Color::INDIGO))),
-        ("Violet ", attrs.color(bevy_color_to_cosmic(Color::PURPLE))),
-        ("U", attrs.color(bevy_color_to_cosmic(Color::PURPLE))),
-        ("N", attrs.color(bevy_color_to_cosmic(Color::INDIGO))),
-        ("I", attrs.color(bevy_color_to_cosmic(Color::BLUE))),
-        ("C", attrs.color(bevy_color_to_cosmic(Color::GREEN))),
-        ("O", attrs.color(bevy_color_to_cosmic(Color::YELLOW))),
-        ("R", attrs.color(bevy_color_to_cosmic(Color::ORANGE))),
-        ("N", attrs.color(bevy_color_to_cosmic(Color::RED))),
+        ("R", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 0.0, 0.0)))),
+        ("A", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 0.65, 0.0)))),
+        ("I", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 1.0, 0.0)))),
+        ("N", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.0, 1.0, 0.0)))),
+        ("B", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.0, 0.0, 1.0)))),
+        ("O", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.29, 0.0, 0.51)))),
+        ("W ", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.5, 0.0, 0.5)))),
+        ("Red ", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 0.0, 0.0)))),
+        ("Orange ", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 0.65, 0.0)))),
+        ("Yellow ", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 1.0, 0.0)))),
+        ("Green ", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.0, 1.0, 0.0)))),
+        ("Blue ", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.0, 0.0, 1.0)))),
+        ("Indigo ", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.29, 0.0, 0.51)))),
+        ("Violet ", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.5, 0.0, 0.5)))),
+        ("U", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.5, 0.0, 0.5)))),
+        ("N", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.29, 0.0, 0.51)))),
+        ("I", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.0, 0.0, 1.0)))),
+        ("C", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.0, 1.0, 0.0)))),
+        ("O", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 1.0, 0.0)))),
+        ("R", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 0.65, 0.0)))),
+        ("N", attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 0.0, 0.0)))),
         (
             "生活,삶,जिंदगी 😀 FPS",
-            attrs.color(bevy_color_to_cosmic(Color::RED)),
+            attrs.color(bevy_color_to_cosmic(Color::linear_rgb(1.0, 0.0, 0.0))),
         ),
     ];
 
@@ -107,7 +107,7 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
 
     let mut attrs_2 = Attrs::new();
     attrs_2 = attrs_2.family(Family::Name("Times New Roman"));
-    attrs_2.color_opt = Some(bevy_color_to_cosmic(Color::PURPLE));
+    attrs_2.color_opt = Some(bevy_color_to_cosmic(Color::linear_rgb(0.5, 0.0, 0.5)));
 
     let cosmic_edit_2 = commands
         .spawn(CosmicEditBundle {
@@ -120,7 +120,7 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
         })
         .id();
 
-    // Spawn the CosmicEditUiBundles as children of root
+    // Spawn the CosmicEditBundles as children of root
     commands.entity(root).with_children(|parent| {
         parent
             .spawn(ButtonBundle {
@@ -129,14 +129,12 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
                     height: Val::Percent(100.),
                     ..default()
                 },
-                background_color: BackgroundColor(Color::WHITE),
                 ..default()
             })
             .insert(CosmicSource(cosmic_edit_1));
 
         parent
             .spawn(ButtonBundle {
-                background_color: BackgroundColor(Color::WHITE.with_a(0.8)),
                 style: Style {
                     width: Val::Percent(50.),
                     height: Val::Percent(100.),

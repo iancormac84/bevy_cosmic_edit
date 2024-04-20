@@ -159,7 +159,7 @@ impl Default for CosmicEditBundle {
             buffer: Default::default(),
             fill_color: Default::default(),
             cursor_color: CursorColor(Color::BLACK),
-            selection_color: SelectionColor(Color::GRAY),
+            selection_color: SelectionColor(Color::srgb(0.5, 0.5, 0.5)),
             text_position: Default::default(),
             default_attrs: Default::default(),
             background_image: Default::default(),
@@ -396,8 +396,8 @@ mod tests {
 
         app.update();
 
-        let mut text_nodes_query = app.world.query::<&CosmicBuffer>();
-        for cosmic_editor in text_nodes_query.iter(&app.world) {
+        let mut text_nodes_query = app.world_mut().query::<&CosmicBuffer>();
+        for cosmic_editor in text_nodes_query.iter(app.world()) {
             insta::assert_debug_snapshot!(cosmic_editor
                 .lines
                 .iter()

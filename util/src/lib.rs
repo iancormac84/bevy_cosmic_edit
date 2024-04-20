@@ -76,9 +76,9 @@ pub fn print_editor_text(
 
 pub fn bevy_color_to_cosmic(color: bevy::prelude::Color) -> CosmicColor {
     CosmicColor::rgba(
-        (color.r() * 255.) as u8,
-        (color.g() * 255.) as u8,
-        (color.b() * 255.) as u8,
-        (color.a() * 255.) as u8,
+        (color.linear().red * 255.) as u8,
+        (color.linear().green * 255.) as u8,
+        (color.linear().blue * 255.) as u8,
+        (color.linear().alpha() * 255.) as u8,
     )
 }

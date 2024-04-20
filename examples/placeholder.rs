@@ -7,7 +7,7 @@ use util::{
 fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
     let camera_bundle = Camera2dBundle {
         camera: Camera {
-            clear_color: ClearColorConfig::Custom(Color::PINK),
+            clear_color: ClearColorConfig::Custom(Color::linear_rgb(1.0, 0.08, 0.58)),
             ..default()
         },
         ..default()
@@ -28,7 +28,7 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
                 },
                 Placeholder::new(
                     "Placeholder",
-                    attrs.color(bevy_color_to_cosmic(Color::GRAY)),
+                    attrs.color(bevy_color_to_cosmic(Color::linear_rgb(0.5, 0.5, 0.5))),
                 ),
             ))
             .id();
