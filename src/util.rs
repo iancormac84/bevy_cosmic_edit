@@ -10,10 +10,10 @@ pub trait ColorExtras {
 impl ColorExtras for Color {
     fn to_cosmic(self) -> CosmicColor {
         CosmicColor::rgba(
-            (self.r() * 255.) as u8,
-            (self.g() * 255.) as u8,
-            (self.b() * 255.) as u8,
-            (self.a() * 255.) as u8,
+            (self.linear().red * 255.) as u8,
+            (self.linear().green * 255.) as u8,
+            (self.linear().blue * 255.) as u8,
+            (self.linear().alpha * 255.) as u8,
         )
     }
 }

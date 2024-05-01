@@ -2,7 +2,7 @@
 
 use crate::*;
 use bevy::{
-    input::mouse::{MouseMotion, MouseScrollUnit, MouseWheel},
+    input::{keyboard::KeyboardInput, mouse::{MouseMotion, MouseScrollUnit, MouseWheel}},
     prelude::*,
     window::PrimaryWindow,
 };
@@ -392,7 +392,7 @@ pub fn kb_move_cursor(
 pub(crate) fn kb_input_text(
     active_editor: Res<FocusedWidget>,
     keys: Res<ButtonInput<KeyCode>>,
-    mut char_evr: EventReader<ReceivedCharacter>,
+    mut char_evr: EventReader<KeyboardInput>,
     mut cosmic_edit_query: Query<(
         &mut CosmicEditor,
         &mut CosmicBuffer,
