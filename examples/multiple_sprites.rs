@@ -18,10 +18,10 @@ fn setup(
 
     let mut attrs = Attrs::new();
     attrs = attrs.family(Family::Name("Victor Mono"));
-    attrs = attrs.color(Color::PURPLE.to_cosmic());
+    attrs = attrs.color(Color::srgb(0.5, 0.0, 0.5).to_cosmic());
 
     commands.spawn(CosmicEditBundle {
-        fill_color: CosmicBackgroundColor(Color::ALICE_BLUE),
+        fill_color: CosmicBackgroundColor(Color::srgb(0.94, 0.97, 1.0)),
         buffer: CosmicBuffer::new(&mut font_system, Metrics::new(14., 18.)).with_text(
             &mut font_system,
             "😀😀😀 x => y",
@@ -42,7 +42,7 @@ fn setup(
     });
 
     commands.spawn(CosmicEditBundle {
-        fill_color: CosmicBackgroundColor(Color::GRAY.with_a(0.5)),
+        fill_color: CosmicBackgroundColor(Color::srgba(0.5, 0.5, 0.5, 0.5)),
         buffer: CosmicBuffer::new(&mut font_system, Metrics::new(14., 18.)).with_text(
             &mut font_system,
             "Widget_2. Click on me",

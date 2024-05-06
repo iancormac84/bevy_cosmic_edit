@@ -4,7 +4,7 @@ use bevy_cosmic_edit::*;
 fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
     let camera_bundle = Camera2dBundle {
         camera: Camera {
-            clear_color: ClearColorConfig::Custom(Color::PINK),
+            clear_color: ClearColorConfig::Custom(Color::srgb(1.0, 0.08, 0.58)),
             ..default()
         },
         ..default()
@@ -23,7 +23,7 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
                         .with_rich_text(&mut font_system, vec![("", attrs)], attrs),
                     ..default()
                 },
-                Placeholder::new("Placeholder", attrs.color(Color::GRAY.to_cosmic())),
+                Placeholder::new("Placeholder", attrs.color(Color::srgb(0.5, 0.5, 0.5).to_cosmic())),
             ))
             .id();
 

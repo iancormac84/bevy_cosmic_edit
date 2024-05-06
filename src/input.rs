@@ -2,7 +2,7 @@
 
 use crate::*;
 use bevy::{
-    input::{keyboard::KeyboardInput, mouse::{MouseMotion, MouseScrollUnit, MouseWheel}},
+    input::{keyboard::{Key, KeyboardInput}, mouse::{MouseMotion, MouseScrollUnit, MouseWheel}},
     prelude::*,
     window::PrimaryWindow,
 };
@@ -480,7 +480,10 @@ pub(crate) fn kb_input_text(
                 if *is_deleting {
                     editor.action(&mut font_system.0, Action::Backspace);
                 } else if !command && (max_chars.0 == 0 || buffer.get_text().len() < max_chars.0) {
-                    let b = char_ev.char.as_bytes();
+                    let b = match &char_ev.logical_key {
+                        Key::Character(smol) => smol.as_bytes(),
+                        _ => unreachable!()
+                    };
                     for c in b {
                         let c: char = (*c).into();
                         editor.action(&mut font_system.0, Action::Insert(c));

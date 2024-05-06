@@ -66,28 +66,28 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
                 .style(FontStyle::Italic),
         ),
         ("\n", attrs),
-        ("R", attrs.color(Color::RED.to_cosmic())),
-        ("A", attrs.color(Color::ORANGE.to_cosmic())),
-        ("I", attrs.color(Color::YELLOW.to_cosmic())),
-        ("N", attrs.color(Color::GREEN.to_cosmic())),
-        ("B", attrs.color(Color::BLUE.to_cosmic())),
-        ("O", attrs.color(Color::INDIGO.to_cosmic())),
-        ("W ", attrs.color(Color::PURPLE.to_cosmic())),
-        ("Red ", attrs.color(Color::RED.to_cosmic())),
-        ("Orange ", attrs.color(Color::ORANGE.to_cosmic())),
-        ("Yellow ", attrs.color(Color::YELLOW.to_cosmic())),
-        ("Green ", attrs.color(Color::GREEN.to_cosmic())),
-        ("Blue ", attrs.color(Color::BLUE.to_cosmic())),
-        ("Indigo ", attrs.color(Color::INDIGO.to_cosmic())),
-        ("Violet ", attrs.color(Color::PURPLE.to_cosmic())),
-        ("U", attrs.color(Color::PURPLE.to_cosmic())),
-        ("N", attrs.color(Color::INDIGO.to_cosmic())),
-        ("I", attrs.color(Color::BLUE.to_cosmic())),
-        ("C", attrs.color(Color::GREEN.to_cosmic())),
-        ("O", attrs.color(Color::YELLOW.to_cosmic())),
-        ("R", attrs.color(Color::ORANGE.to_cosmic())),
-        ("N", attrs.color(Color::RED.to_cosmic())),
-        ("生活,삶,जिंदगी 😀 FPS", attrs.color(Color::RED.to_cosmic())),
+        ("R", attrs.color(Color::srgb(1.0, 0.0, 0.0).to_cosmic())),
+        ("A", attrs.color(Color::srgb(1.0, 0.65, 0.0).to_cosmic())),
+        ("I", attrs.color(Color::srgb(1.0, 1.0, 0.0).to_cosmic())),
+        ("N", attrs.color(Color::srgb(0.0, 1.0, 0.0).to_cosmic())),
+        ("B", attrs.color(Color::srgb(0.0, 0.0, 1.0).to_cosmic())),
+        ("O", attrs.color(Color::srgb(0.29, 0.0, 0.51).to_cosmic())),
+        ("W ", attrs.color(Color::srgb(0.5, 0.0, 0.5).to_cosmic())),
+        ("Red ", attrs.color(Color::srgb(1.0, 0.0, 0.0).to_cosmic())),
+        ("Orange ", attrs.color(Color::srgb(1.0, 0.65, 0.0).to_cosmic())),
+        ("Yellow ", attrs.color(Color::srgb(1.0, 1.0, 0.0).to_cosmic())),
+        ("Green ", attrs.color(Color::srgb(0.0, 1.0, 0.0).to_cosmic())),
+        ("Blue ", attrs.color(Color::srgb(0.0, 0.0, 1.0).to_cosmic())),
+        ("Indigo ", attrs.color(Color::srgb(0.29, 0.0, 0.51).to_cosmic())),
+        ("Violet ", attrs.color(Color::srgb(0.5, 0.0, 0.5).to_cosmic())),
+        ("U", attrs.color(Color::srgb(0.5, 0.0, 0.5).to_cosmic())),
+        ("N", attrs.color(Color::srgb(0.29, 0.0, 0.51).to_cosmic())),
+        ("I", attrs.color(Color::srgb(0.0, 0.0, 1.0).to_cosmic())),
+        ("C", attrs.color(Color::srgb(0.0, 1.0, 0.0).to_cosmic())),
+        ("O", attrs.color(Color::srgb(1.0, 1.0, 0.0).to_cosmic())),
+        ("R", attrs.color(Color::srgb(1.0, 0.65, 0.0).to_cosmic())),
+        ("N", attrs.color(Color::srgb(1.0, 0.0, 0.0).to_cosmic())),
+        ("生活,삶,जिंदगी 😀 FPS", attrs.color(Color::srgb(1.0, 0.0, 0.0).to_cosmic())),
     ];
 
     let cosmic_edit_1 = commands
@@ -103,7 +103,7 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
 
     let mut attrs_2 = Attrs::new();
     attrs_2 = attrs_2.family(Family::Name("Times New Roman"));
-    attrs_2.color_opt = Some(Color::PURPLE.to_cosmic());
+    attrs_2.color_opt = Some(Color::srgb(0.5, 0.0, 0.5).to_cosmic());
 
     let cosmic_edit_2 = commands
         .spawn(CosmicEditBundle {
@@ -125,14 +125,14 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
                     height: Val::Percent(100.),
                     ..default()
                 },
-                background_color: BackgroundColor(Color::WHITE),
+                image: UiImage::default().with_color(Color::WHITE),
                 ..default()
             })
             .insert(CosmicSource(cosmic_edit_1));
 
         parent
             .spawn(ButtonBundle {
-                background_color: BackgroundColor(Color::WHITE.with_a(0.8)),
+                image: UiImage::default().with_color(Color::WHITE.with_alpha(0.8)),
                 style: Style {
                     width: Val::Percent(50.),
                     height: Val::Percent(100.),

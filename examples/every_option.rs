@@ -7,7 +7,7 @@ struct TextChangeTimer(pub Timer);
 fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
     commands.spawn(Camera2dBundle::default());
 
-    let attrs = Attrs::new().color(Color::rgb(0.27, 0.27, 0.27).to_cosmic());
+    let attrs = Attrs::new().color(Color::srgb(0.27, 0.27, 0.27).to_cosmic());
 
     let editor = commands
         .spawn(CosmicEditBundle {
@@ -16,9 +16,9 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
                 "Begin counting.",
                 attrs,
             ),
-            cursor_color: CursorColor(Color::GREEN),
-            selection_color: SelectionColor(Color::PINK),
-            fill_color: CosmicBackgroundColor(Color::YELLOW_GREEN),
+            cursor_color: CursorColor(Color::srgb(0.0, 1.0, 0.0)),
+            selection_color: SelectionColor(Color::srgb(1.0, 0.08, 0.58)),
+            fill_color: CosmicBackgroundColor(Color::srgb(0.6, 0.8, 0.2)),
             x_offset: XOffset::default(),
             text_position: CosmicTextAlign::default(),
             background_image: CosmicBackgroundImage::default(),
@@ -48,7 +48,7 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
 
     commands
         .spawn(ButtonBundle {
-            border_color: Color::LIME_GREEN.into(),
+            border_color: Color::srgb(0.2, 0.8, 0.2).into(),
             style: Style {
                 // Size and position of text box
                 border: UiRect::all(Val::Px(4.)),
@@ -58,7 +58,7 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
                 top: Val::Px(100.),
                 ..default()
             },
-            background_color: Color::WHITE.into(),
+            image: UiImage::default().with_color(Color::WHITE),
             ..default()
         })
         .insert(CosmicSource(editor));

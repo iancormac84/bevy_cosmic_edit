@@ -189,6 +189,8 @@ fn create_cosmic_font_system(cosmic_font_config: CosmicFontConfig) -> FontSystem
 
 #[cfg(test)]
 mod tests {
+    use bevy::input::keyboard::KeyboardInput;
+
     use crate::*;
 
     use self::buffer::CosmicBuffer;
@@ -223,7 +225,7 @@ mod tests {
         let mouse_input: ButtonInput<MouseButton> = ButtonInput::<MouseButton>::default();
         app.insert_resource(mouse_input);
 
-        app.add_event::<ReceivedCharacter>();
+        app.add_event::<KeyboardInput>();
 
         app.update();
 

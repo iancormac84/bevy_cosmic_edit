@@ -67,14 +67,14 @@ fn draw_pixel(buffer: &mut [u8], width: i32, height: i32, x: i32, y: i32, color:
 
     let fg = bevy::prelude::Color::srgba_u8(color.r(), color.g(), color.b(), color.a());
 
-    let premul = fg * Vec3::splat(color.a() as f32 / 255.0);
+    let premul = fg.linear() * (color.a() as f32 / 255.0);
 
-    let out = premul + bg * (1.0 - fg.alpha());
+    let out = premul + bg.linear() * (1.0 - fg.alpha());
 
-    buffer[offset + 2] = (out.b() * 255.0) as u8;
-    buffer[offset + 1] = (out.g() * 255.0) as u8;
-    buffer[offset] = (out.r() * 255.0) as u8;
-    buffer[offset + 3] = (out.a() * 255.0) as u8;
+    buffer[offset + 2] = (out.blue * 255.0) as u8;
+    buffer[offset + 1] = (out.green * 255.0) as u8;
+    buffer[offset] = (out.red * 255.0) as u8;
+    buffer[offset + 3] = (out.alpha() * 255.0) as u8;
 }
 
 fn render_texture(
