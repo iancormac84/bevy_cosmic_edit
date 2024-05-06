@@ -196,7 +196,7 @@ impl Default for CosmicEditBundle {
             buffer: Default::default(),
             fill_color: Default::default(),
             cursor_color: CursorColor(Color::BLACK),
-            selection_color: SelectionColor(Color::GRAY),
+            selection_color: SelectionColor(LinearRgba::gray(0.5).into()),
             text_position: Default::default(),
             default_attrs: Default::default(),
             background_image: Default::default(),
