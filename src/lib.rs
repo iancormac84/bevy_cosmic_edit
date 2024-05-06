@@ -227,7 +227,7 @@ mod tests {
 
         app.update();
 
-        let mut text_nodes_query = app.world().query::<&CosmicBuffer>();
+        let mut text_nodes_query = app.world_mut().query::<&CosmicBuffer>();
         for cosmic_editor in text_nodes_query.iter(&app.world()) {
             insta::assert_debug_snapshot!(cosmic_editor
                 .lines

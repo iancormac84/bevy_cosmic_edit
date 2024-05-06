@@ -56,7 +56,7 @@ fn draw_pixel(buffer: &mut [u8], width: i32, height: i32, x: i32, y: i32, color:
 
     let offset = (y as usize * width as usize + x as usize) * 4;
 
-    let bg = bevy::prelude::Color::rgba_u8(
+    let bg = bevy::prelude::Color::srgba_u8(
         buffer[offset],
         buffer[offset + 1],
         buffer[offset + 2],
@@ -65,11 +65,11 @@ fn draw_pixel(buffer: &mut [u8], width: i32, height: i32, x: i32, y: i32, color:
 
     // TODO: if alpha is 100% or bg is empty skip blending
 
-    let fg = bevy::prelude::Color::rgba_u8(color.r(), color.g(), color.b(), color.a());
+    let fg = bevy::prelude::Color::srgba_u8(color.r(), color.g(), color.b(), color.a());
 
     let premul = fg * Vec3::splat(color.a() as f32 / 255.0);
 
-    let out = premul + bg * (1.0 - fg.a());
+    let out = premul + bg * (1.0 - fg.alpha());
 
     buffer[offset + 2] = (out.b() * 255.0) as u8;
     buffer[offset + 1] = (out.g() * 255.0) as u8;
@@ -137,10 +137,10 @@ fn render_texture(
         } else {
             let bg = fill_color.0;
             for pixel in pixels.chunks_exact_mut(4) {
-                pixel[0] = (bg.r() * 255.) as u8; // Red component
-                pixel[1] = (bg.g() * 255.) as u8; // Green component
-                pixel[2] = (bg.b() * 255.) as u8; // Blue component
-                pixel[3] = (bg.a() * 255.) as u8; // Alpha component
+                pixel[0] = (bg.linear().red * 255.) as u8; // Red component
+                pixel[1] = (bg.linear().green * 255.) as u8; // Green component
+                pixel[2] = (bg.linear().blue * 255.) as u8; // Blue component
+                pixel[3] = (bg.linear().alpha * 255.) as u8; // Alpha component
             }
         }
 
@@ -177,23 +177,23 @@ fn render_texture(
             }
 
             let cursor_opacity = if editor.cursor_visible && readonly_opt.is_none() {
-                (cursor_color.0.a() * 255.) as u8
+                (cursor_color.0.alpha() * 255.) as u8
             } else {
                 0
             };
 
             let cursor_color = Color::rgba(
-                (cursor_color.r() * 255.) as u8,
-                (cursor_color.g() * 255.) as u8,
-                (cursor_color.b() * 255.) as u8,
+                (cursor_color.linear().red * 255.) as u8,
+                (cursor_color.linear().green * 255.) as u8,
+                (cursor_color.linear().blue * 255.) as u8,
                 cursor_opacity,
             );
 
             let selection_color = Color::rgba(
-                (selection_color.r() * 255.) as u8,
-                (selection_color.g() * 255.) as u8,
-                (selection_color.b() * 255.) as u8,
-                (selection_color.a() * 255.) as u8,
+                (selection_color.linear().red * 255.) as u8,
+                (selection_color.linear().green * 255.) as u8,
+                (selection_color.linear().blue * 255.) as u8,
+                (selection_color.linear().alpha() * 255.) as u8,
             );
 
             editor.draw(
