@@ -82,7 +82,7 @@ pub fn change_active_editor_sprite(
     >,
     camera_q: Query<(&Camera, &GlobalTransform)>,
 ) {
-    let window = windows.single();
+    if let Ok(window) = windows.get_single() {
     let (camera, camera_transform) = camera_q.single();
     if buttons.just_pressed(MouseButton::Left) {
         for (sprite, node_transform, visibility, entity) in &mut cosmic_edit_query.iter_mut() {
@@ -102,7 +102,7 @@ pub fn change_active_editor_sprite(
                 }
             };
         }
-    }
+    }}
 }
 
 /// System to allow focus on click for UI widgets
