@@ -45,7 +45,7 @@ pub(crate) fn change_cursor(
     evr_mouse_motion: EventReader<MouseMotion>,
     mouse_buttons: Res<ButtonInput<MouseButton>>,
     mut windows: Query<(Entity, &mut Window), With<PrimaryWindow>>,
-    cursor: Query<&CursorIcon>,
+    cursor: Query<&CursorIcon, With<Window>>,
 ) {
     if windows.iter().len() == 0 {
         return;
@@ -53,7 +53,9 @@ pub(crate) fn change_cursor(
     let (window_entity, mut window) = windows.single_mut();
 
     if let Some(_ev) = evr_hover_in.read().last() {
-        commands.entity(window_entity).insert(cursor.single().clone());
+        if let Err(_) = cursor.get_single() {
+            commands.entity(window_entity).insert();
+        }
     } else if !evr_hover_out.is_empty() {
         commands.entity(window_entity).remove::<CursorIcon>();
     }
