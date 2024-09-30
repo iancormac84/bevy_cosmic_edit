@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, render::view::cursor::CursorIcon};
 use bevy_cosmic_edit::{
     cosmic_text::{Attrs, AttrsOwned, Metrics},
     *,
@@ -29,7 +29,7 @@ fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
             max_chars: MaxChars(15),
             max_lines: MaxLines(1),
             mode: CosmicWrap::Wrap,
-            hover_cursor: HoverCursor(CursorIcon::Pointer),
+            hover_cursor: CursorIcon::default(),
             // CosmicEdit draws to this spritebundle
             sprite_bundle: SpriteBundle {
                 sprite: Sprite {
