@@ -2,7 +2,7 @@
 // Rewrite should address issue #93 too
 
 use crate::*;
-use bevy::{input::mouse::MouseMotion, prelude::*, window::PrimaryWindow};
+use bevy::{input::mouse::MouseMotion, prelude::*, render::view::cursor::CursorIcon, window::{PrimaryWindow, SystemCursorIcon}};
 
 /// System set for mouse cursor systems. Runs in [`Update`]
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
@@ -32,7 +32,7 @@ pub struct HoverCursor(pub CursorIcon);
 
 impl Default for HoverCursor {
     fn default() -> Self {
-        Self(CursorIcon::Text)
+        Self(CursorIcon::System(SystemCursorIcon::Text))
     }
 }
 
@@ -63,7 +63,7 @@ pub(crate) fn change_cursor(
     if let Some(ev) = evr_hover_in.read().last() {
         window.cursor.icon = ev.0;
     } else if !evr_hover_out.is_empty() {
-        window.cursor.icon = CursorIcon::Default;
+        window.cursor.icon = CursorIcon::default();
     }
 
     if !evr_text_changed.is_empty() {
@@ -101,7 +101,7 @@ pub(crate) fn hover_sprites(
     let window = windows.single();
     let (camera, camera_transform) = camera_q.single();
 
-    let mut icon = CursorIcon::Default;
+    let mut icon = CursorIcon::default();
 
     for (sprite, visibility, node_transform, hover) in &mut cosmic_edit_query.iter_mut() {
         if visibility == Visibility::Hidden {
@@ -114,10 +114,10 @@ pub(crate) fn hover_sprites(
         let x_max = node_transform.affine().translation.x + size.x / 2.;
         let y_max = node_transform.affine().translation.y + size.y / 2.;
         if let Some(pos) = window.cursor_position() {
-            if let Some(pos) = camera.viewport_to_world_2d(camera_transform, pos) {
+            if let Ok(pos) = camera.viewport_to_world_2d(camera_transform, pos) {
                 if x_min < pos.x && pos.x < x_max && y_min < pos.y && pos.y < y_max {
                     *hovered = true;
-                    icon = hover.0;
+                    icon = hover.0.clone();
                 }
             }
         }
@@ -147,7 +147,7 @@ pub(crate) fn hover_ui(
             }
             Interaction::Hovered => {
                 if let Ok(hover) = cosmic_query.get(source.0) {
-                    evw_hover_in.send(TextHoverIn(hover.0));
+                    evw_hover_in.send(TextHoverIn(hover.0.clone()));
                 }
             }
             _ => {}
