@@ -2,7 +2,7 @@
 // Rewrite should address issue #93 too
 
 use crate::*;
-use bevy::{input::mouse::MouseMotion, prelude::*, render::view::cursor::CursorIcon, window::{PrimaryWindow, SystemCursorIcon}};
+use bevy::{input::mouse::MouseMotion, prelude::*, render::view::cursor::CursorIcon, window::PrimaryWindow};
 
 /// System set for mouse cursor systems. Runs in [`Update`]
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
@@ -27,20 +27,10 @@ impl Plugin for CursorPlugin {
     }
 }
 
-#[derive(Component, Deref)]
-pub struct HoverCursor(pub CursorIcon);
-
-impl Default for HoverCursor {
-    fn default() -> Self {
-        Self(CursorIcon::System(SystemCursorIcon::Text))
-    }
-}
-
 /// For use with custom cursor control
 /// Event is emitted when cursor enters a text widget
-/// Event contains the cursor from the buffer's [`HoverCursor`]
-#[derive(Event, Deref)]
-pub struct TextHoverIn(pub CursorIcon);
+#[derive(Event)]
+pub struct TextHoverIn;
 
 /// For use with custom cursor control
 /// Event is emitted when cursor leaves a text widget
@@ -48,22 +38,24 @@ pub struct TextHoverIn(pub CursorIcon);
 pub struct TextHoverOut;
 
 pub(crate) fn change_cursor(
+    mut commands: Commands,
     mut evr_hover_in: EventReader<TextHoverIn>,
     evr_hover_out: EventReader<TextHoverOut>,
     evr_text_changed: EventReader<CosmicTextChanged>,
     evr_mouse_motion: EventReader<MouseMotion>,
     mouse_buttons: Res<ButtonInput<MouseButton>>,
-    mut windows: Query<&mut Window, With<PrimaryWindow>>,
+    mut windows: Query<(Entity, &mut Window), With<PrimaryWindow>>,
+    cursor: Query<&CursorIcon>,
 ) {
     if windows.iter().len() == 0 {
         return;
     }
-    let mut window = windows.single_mut();
+    let (window_entity, mut window) = windows.single_mut();
 
-    if let Some(ev) = evr_hover_in.read().last() {
-        window.cursor.icon = ev.0;
+    if let Some(_ev) = evr_hover_in.read().last() {
+        commands.entity(window_entity).insert(cursor.single().clone());
     } else if !evr_hover_out.is_empty() {
-        window.cursor.icon = CursorIcon::default();
+        commands.entity(window_entity).remove::<CursorIcon>();
     }
 
     if !evr_text_changed.is_empty() {
@@ -85,7 +77,7 @@ type CameraQuery<'a, 'b, 'c, 'd> = Query<'a, 'b, (&'c Camera, &'d GlobalTransfor
 pub(crate) fn hover_sprites(
     windows: Query<&Window, With<PrimaryWindow>>,
     mut cosmic_edit_query: Query<
-        (&mut Sprite, &Visibility, &GlobalTransform, &HoverCursor),
+        (&mut Sprite, &Visibility, &GlobalTransform, &CursorIcon),
         With<CosmicBuffer>,
     >,
     camera_q: CameraQuery,
@@ -101,9 +93,7 @@ pub(crate) fn hover_sprites(
     let window = windows.single();
     let (camera, camera_transform) = camera_q.single();
 
-    let mut icon = CursorIcon::default();
-
-    for (sprite, visibility, node_transform, hover) in &mut cosmic_edit_query.iter_mut() {
+    for (sprite, visibility, node_transform, _hover) in &mut cosmic_edit_query.iter_mut() {
         if visibility == Visibility::Hidden {
             continue;
         }
@@ -117,7 +107,6 @@ pub(crate) fn hover_sprites(
             if let Ok(pos) = camera.viewport_to_world_2d(camera_transform, pos) {
                 if x_min < pos.x && pos.x < x_max && y_min < pos.y && pos.y < y_max {
                     *hovered = true;
-                    icon = hover.0.clone();
                 }
             }
         }
@@ -125,7 +114,7 @@ pub(crate) fn hover_sprites(
 
     if *last_hovered != *hovered {
         if *hovered {
-            evw_hover_in.send(TextHoverIn(icon));
+            evw_hover_in.send(TextHoverIn);
         } else {
             evw_hover_out.send(TextHoverOut);
         }
@@ -136,7 +125,7 @@ pub(crate) fn hover_sprites(
 
 pub(crate) fn hover_ui(
     interaction_query: Query<(&Interaction, &CosmicSource), Changed<Interaction>>,
-    cosmic_query: Query<&HoverCursor, With<CosmicBuffer>>,
+    cosmic_query: Query<&CursorIcon, With<CosmicBuffer>>,
     mut evw_hover_in: EventWriter<TextHoverIn>,
     mut evw_hover_out: EventWriter<TextHoverOut>,
 ) {
@@ -146,8 +135,8 @@ pub(crate) fn hover_ui(
                 evw_hover_out.send(TextHoverOut);
             }
             Interaction::Hovered => {
-                if let Ok(hover) = cosmic_query.get(source.0) {
-                    evw_hover_in.send(TextHoverIn(hover.0.clone()));
+                if let Ok(_hover) = cosmic_query.get(source.0) {
+                    evw_hover_in.send(TextHoverIn);
                 }
             }
             _ => {}
