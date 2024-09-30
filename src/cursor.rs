@@ -67,11 +67,11 @@ pub(crate) fn change_cursor(
     }
 
     if !evr_text_changed.is_empty() {
-        window.cursor.visible = false;
+        window.cursor_options.visible = false;
     }
 
     if mouse_buttons.get_just_pressed().len() != 0 || !evr_mouse_motion.is_empty() {
-        window.cursor.visible = true;
+        window.cursor_options.visible = true;
     }
 }
 

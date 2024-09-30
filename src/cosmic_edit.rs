@@ -1,5 +1,5 @@
 use crate::*;
-use bevy::prelude::*;
+use bevy::{prelude::*, render::view::cursor::CursorIcon, window::SystemCursorIcon};
 use cosmic_text::{Attrs, AttrsOwned, Editor, FontSystem};
 
 /// Enum representing text wrapping in a cosmic [`Buffer`]
@@ -196,7 +196,7 @@ pub struct CosmicEditBundle {
     pub text_position: CosmicTextAlign,
     pub padding: CosmicPadding,
     pub widget_size: CosmicWidgetSize,
-    pub hover_cursor: HoverCursor,
+    pub hover_cursor: CursorIcon,
 }
 
 impl Default for CosmicEditBundle {
@@ -223,7 +223,7 @@ impl Default for CosmicEditBundle {
             x_offset: Default::default(),
             padding: Default::default(),
             widget_size: Default::default(),
-            hover_cursor: Default::default(),
+            hover_cursor: CursorIcon::System(SystemCursorIcon::Text),
         }
     }
 }
