@@ -2,7 +2,7 @@
 // Rewrite should address issue #93 too
 
 use crate::*;
-use bevy::{input::mouse::MouseMotion, prelude::*, render::view::cursor::CursorIcon, window::PrimaryWindow};
+use bevy::{input::mouse::MouseMotion, prelude::*, render::view::cursor::CursorIcon, window::{PrimaryWindow, SystemCursorIcon}};
 
 /// System set for mouse cursor systems. Runs in [`Update`]
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
@@ -45,7 +45,6 @@ pub(crate) fn change_cursor(
     evr_mouse_motion: EventReader<MouseMotion>,
     mouse_buttons: Res<ButtonInput<MouseButton>>,
     mut windows: Query<(Entity, &mut Window), With<PrimaryWindow>>,
-    cursor: Query<&CursorIcon, With<Window>>,
 ) {
     if windows.iter().len() == 0 {
         return;
@@ -53,9 +52,7 @@ pub(crate) fn change_cursor(
     let (window_entity, mut window) = windows.single_mut();
 
     if let Some(_ev) = evr_hover_in.read().last() {
-        if let Err(_) = cursor.get_single() {
-            commands.entity(window_entity).insert();
-        }
+        commands.entity(window_entity).entry::<CursorIcon>().or_insert(CursorIcon::System(SystemCursorIcon::Text));
     } else if !evr_hover_out.is_empty() {
         commands.entity(window_entity).remove::<CursorIcon>();
     }
