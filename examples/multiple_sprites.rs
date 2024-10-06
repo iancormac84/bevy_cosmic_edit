@@ -10,14 +10,13 @@ fn setup(
     mut font_system: ResMut<CosmicFontSystem>,
 ) {
     let primary_window = windows.single();
-    let camera_bundle = Camera2dBundle {
-        camera: Camera {
+    commands.spawn((
+        Camera2d,
+        Camera {
             clear_color: ClearColorConfig::Custom(Color::WHITE),
             ..default()
-        },
-        ..default()
-    };
-    commands.spawn(camera_bundle);
+        }
+    ));
 
     let mut attrs = Attrs::new();
     attrs = attrs.family(Family::Name("Victor Mono"));

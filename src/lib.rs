@@ -13,10 +13,10 @@
 //!
 //! ```
 //! use bevy::prelude::*;
-//! use bevy_cosmic_edit::*;
+//! use bevy_cosmic_edit::{cosmic_text::{Attrs, Family, Metrics}, *};
 //!
 //! fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
-//!     commands.spawn(Camera2dBundle::default());
+//!     commands.spawn(Camera2d);
 //!
 //!     // Text attributes
 //!     let font_size = 16.0;
@@ -166,14 +166,12 @@ impl Plugin for CosmicEditPlugin {
 /// }
 ///
 /// fn setup(mut commands: Commands) {
-///   commands.spawn((Camera3dBundle::default(), CosmicPrimaryCamera));
-///   commands.spawn(Camera3dBundle {
-///     camera: Camera {
+///   commands.spawn((Camera3d, CosmicPrimaryCamera));
+///   commands.spawn((Camera3d,
+///     Camera {
 ///       order: 2,
 ///       ..default()
-///     },
-///     ..default()
-///   });
+///     }));
 /// }
 /// ```
 #[cfg(feature = "multicam")]

@@ -7,7 +7,7 @@ use bevy_cosmic_edit::{
 };
 
 fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2d);
     let root = commands
         .spawn(NodeBundle {
             style: bevy::prelude::Style {

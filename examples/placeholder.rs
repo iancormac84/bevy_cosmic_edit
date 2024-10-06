@@ -5,14 +5,13 @@ use bevy_cosmic_edit::{
 };
 
 fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
-    let camera_bundle = Camera2dBundle {
-        camera: Camera {
+    commands.spawn((
+        Camera2d,
+        Camera {
             clear_color: ClearColorConfig::Custom(bevy::color::palettes::css::PINK.into()),
             ..default()
-        },
-        ..default()
-    };
-    commands.spawn(camera_bundle);
+        }
+    ));
 
     let mut attrs = Attrs::new();
     attrs = attrs.family(Family::Name("Victor Mono"));

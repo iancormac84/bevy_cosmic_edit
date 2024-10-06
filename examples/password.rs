@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_cosmic_edit::{cosmic_text::Attrs, *};
 
 fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2d);
 
     // Sprite editor
     commands.spawn((

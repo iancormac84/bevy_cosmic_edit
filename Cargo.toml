@@ -27,6 +27,7 @@ bevy = { git = "https://github.com/bevyengine/bevy.git", default-features = fals
     "bevy_text",
     "bevy_ui",
     "bevy_winit",
+    "custom_cursor",
     "png",
     "x11",
     "webgpu",

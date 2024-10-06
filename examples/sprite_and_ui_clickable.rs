@@ -5,7 +5,7 @@ use bevy_cosmic_edit::{
 };
 
 fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2d);
 
     // UI editor
     let ui_editor = commands

@@ -6,7 +6,7 @@ use cosmic_text::{Attrs, Edit};
 ///
 /// ```
 /// # use bevy::prelude::*;
-/// # use bevy_cosmic_edit::*;
+/// # use bevy_cosmic_edit::{cosmic_text::Attrs, *};
 /// # fn setup(mut commands: Commands) {
 /// commands.spawn((CosmicEditBundle {
 ///     sprite_bundle: SpriteBundle {

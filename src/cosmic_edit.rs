@@ -1,5 +1,5 @@
 use crate::*;
-use bevy::{prelude::*, render::view::cursor::CursorIcon, window::SystemCursorIcon};
+use bevy::{prelude::*, window::SystemCursorIcon, winit::cursor::CursorIcon};
 use cosmic_text::{Attrs, AttrsOwned, Editor, FontSystem};
 
 /// Enum representing text wrapping in a cosmic [`Buffer`]
