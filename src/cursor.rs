@@ -2,7 +2,7 @@
 // Rewrite should address issue #93 too
 
 use crate::*;
-use bevy::{input::mouse::MouseMotion, prelude::*, render::view::cursor::CursorIcon, window::{PrimaryWindow, SystemCursorIcon}};
+use bevy::{input::mouse::MouseMotion, prelude::*, winit::cursor::CursorIcon, window::{PrimaryWindow, SystemCursorIcon}};
 
 /// System set for mouse cursor systems. Runs in [`Update`]
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]

@@ -1,4 +1,4 @@
-use bevy::{prelude::*, render::view::cursor::CursorIcon};
+use bevy::{prelude::*, winit::cursor::CursorIcon};
 use bevy_cosmic_edit::{
     cosmic_text::{Attrs, AttrsOwned, Metrics},
     *,
@@ -8,7 +8,7 @@ use bevy_cosmic_edit::{
 struct TextChangeTimer(pub Timer);
 
 fn setup(mut commands: Commands, mut font_system: ResMut<CosmicFontSystem>) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2d);
 
     let attrs = Attrs::new().color(Color::srgb(0.27, 0.27, 0.27).to_cosmic());
 
