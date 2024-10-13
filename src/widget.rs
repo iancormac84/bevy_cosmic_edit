@@ -142,11 +142,11 @@ fn set_buffer_size(
 
 /// Instantiates a new image for a [`CosmicBuffer`]
 fn new_image_from_default(
-    mut query: Query<&mut Handle<Image>, Added<CosmicBuffer>>,
+    mut query: Query<&mut Sprite, Added<CosmicBuffer>>,
     mut images: ResMut<Assets<Image>>,
 ) {
     for mut canvas in query.iter_mut() {
-        *canvas = images.add(Image::default());
+        canvas.image = images.add(Image::default());
     }
 }
 

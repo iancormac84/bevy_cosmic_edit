@@ -87,7 +87,7 @@ fn render_texture(
         &CursorColor,
         &SelectionColor,
         Option<&SelectedTextColor>,
-        &Handle<Image>,
+        &Sprite,
         &CosmicWidgetSize,
         &CosmicPadding,
         &XOffset,
@@ -216,7 +216,7 @@ fn render_texture(
             buffer.set_redraw(false);
         }
 
-        if let Some(prev_image) = images.get_mut(canvas) {
+        if let Some(prev_image) = images.get_mut(&canvas.image) {
             prev_image.data.clear();
             prev_image.data.extend_from_slice(pixels.as_slice());
             prev_image.resize(Extent3d {
